@@ -13,22 +13,22 @@ export const site = {
 export const heroImages = [
   {
     id: "0",
-    src: "https://images.unsplash.com/photo-1514565131-fce0801e5785?auto=format&fit=crop&w=1600&q=80",
+    src: "https://images.unsplash.com/photo-1514565131-fce0801e5785?auto=format&fit=crop&w=1000&q=65",
     alt: "City skyline at dusk",
   },
   {
     id: "20",
-    src: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=80",
+    src: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1000&q=65",
     alt: "Glass towers against sky",
   },
   {
     id: "60",
-    src: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1600&q=80",
+    src: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1000&q=65",
     alt: "Commercial office interior",
   },
   {
     id: "80",
-    src: "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&w=1600&q=80",
+    src: "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&w=1000&q=65",
     alt: "Urban street with towers",
   },
   {
@@ -186,7 +186,7 @@ export const properties = [
     area: "47.38m²",
     priceHint: "From $485,000",
     image:
-      "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=720&q=65",
     variant: "overlay" as const,
   },
   {
@@ -197,7 +197,7 @@ export const properties = [
     area: "112.00m²",
     priceHint: "Guide $1.1m–$1.2m",
     image:
-      "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=720&q=65",
     variant: "overlay" as const,
   },
   {
@@ -208,7 +208,7 @@ export const properties = [
     area: "68.50m²",
     priceHint: "From $720,000",
     image:
-      "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=720&q=65",
     variant: "overlay" as const,
   },
   {
@@ -219,7 +219,7 @@ export const properties = [
     area: "94.20m²",
     priceHint: "From $850/m²",
     image:
-      "https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=720&q=65",
     variant: "overlay" as const,
   },
 ];
@@ -232,7 +232,7 @@ export const teamMembers = [
     email: "admin@melbournecbdrealestate.com.au",
     bio: "Commercial sales and leasing specialist focused on Melbourne CBD mandates — timing, buyers, and clean execution.",
     image:
-      "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=600&q=65",
   },
   {
     name: "Loren Adami",
@@ -240,7 +240,7 @@ export const teamMembers = [
     phone: "(03) 8676 0400",
     email: "admin@melbournecbdrealestate.com.au",
     bio: "Keeps ownership and tenancy running smoothly — coordination, care, and day-to-day property management.",
-    image: "/team/loren-adami.png",
+    image: "/team/loren-adami.jpg",
   },
   {
     name: "Daniel Telfer",
@@ -248,7 +248,7 @@ export const teamMembers = [
     phone: "(03) 8676 0400",
     email: "admin@melbournecbdrealestate.com.au",
     bio: "Negotiates commercial outcomes across sales and leasing with a CBD-first market view.",
-    image: "/team/daniel-telfer.png",
+    image: "/team/daniel-telfer.jpg",
   },
   {
     name: "John Collings",
@@ -256,6 +256,6 @@ export const teamMembers = [
     phone: "(03) 8676 0400",
     email: "admin@melbournecbdrealestate.com.au",
     bio: "Trust accounting with precision — compliance, clarity, and confidence for every transaction.",
-    image: "/team/john-collings.png",
+    image: "/team/john-collings.jpg",
   },
 ];

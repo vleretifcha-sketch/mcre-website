@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { site } from "@/lib/content";
@@ -13,7 +14,7 @@ const PAD = 16;
 
 const GALLERY = [
   {
-    src: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1400&q=80",
+    src: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=900&q=65",
     alt: "Commercial office corridor",
     label: "Little Collins",
   },
@@ -24,22 +25,22 @@ const GALLERY = [
     hero: true,
   },
   {
-    src: "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1400&q=80",
+    src: "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=900&q=65",
     alt: "Meeting room interior",
     label: "Queen Street",
   },
   {
-    src: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1400&q=80",
+    src: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=900&q=65",
     alt: "Glass office partitions",
     label: "Collins Street",
   },
   {
-    src: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=1400&q=80",
+    src: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=900&q=65",
     alt: "Open plan workspace",
     label: "Bourke Street",
   },
   {
-    src: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1400&q=80",
+    src: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=900&q=65",
     alt: "CBD glass towers",
     label: "CBD skyline",
   },
@@ -301,12 +302,19 @@ export function HeroScrollGallery() {
   return (
     <div
       ref={rootRef}
-      className="relative flex h-[calc(100svh-4.5rem)] items-center overflow-hidden bg-parchment px-4"
+      className={cn(
+        "relative flex h-[calc(100svh-4.5rem)] items-center overflow-hidden bg-parchment px-4",
+        !introDone && "overflow-x-hidden",
+      )}
     >
       <div
         ref={trackRef}
-        className="flex w-max min-w-full shrink-0 items-center will-change-transform"
+        className={cn(
+          "flex w-max min-w-full shrink-0 items-center will-change-transform",
+          !introDone && "invisible",
+        )}
         style={{ gap: 0 }}
+        aria-hidden={!introDone}
       >
         {GALLERY.map((item, i) => (
           <figure
@@ -321,11 +329,18 @@ export function HeroScrollGallery() {
                   : "hidden h-[min(58vh,480px)] w-[min(22vw,280px)]",
             )}
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <Image
               src={item.src}
               alt={item.alt}
-              className="h-full w-full object-cover"
+              fill
+              sizes={
+                item.hero
+                  ? "100vw"
+                  : "(max-width: 768px) 0px, min(22vw, 280px)"
+              }
+              quality={70}
+              priority={Boolean(item.hero)}
+              className="object-cover"
               draggable={false}
             />
             {item.hero ? (
@@ -346,10 +361,14 @@ export function HeroScrollGallery() {
 
       <div
         ref={copyRef}
-        className="pointer-events-none absolute inset-x-4 bottom-8 z-10 sm:bottom-10 lg:bottom-12"
+        className={cn(
+          // Align to the hero card (root already has px-4), then inset copy inside the image.
+          "pointer-events-none absolute inset-x-4 bottom-8 z-10 px-5 sm:bottom-10 sm:px-6 lg:bottom-12 lg:px-8",
+          !introDone && "invisible",
+        )}
       >
-        <div className="pointer-events-auto mx-auto flex w-full max-w-[1200px] flex-col gap-8 lg:flex-row lg:items-end lg:justify-between lg:gap-12">
-          <h1 className="max-w-[12ch] font-ui text-[clamp(3.15rem,9.5vw,5.25rem)] font-semibold leading-[0.92] tracking-[-0.04em] text-white uppercase drop-shadow-[0_2px_24px_rgba(0,0,0,0.45)]">
+        <div className="pointer-events-auto flex w-full flex-col gap-8 lg:flex-row lg:items-end lg:justify-between lg:gap-12">
+          <h1 className="max-w-[12ch] font-ui text-[clamp(2.75rem,8.5vw,5.25rem)] font-semibold leading-[0.92] tracking-[-0.04em] text-white uppercase drop-shadow-[0_2px_24px_rgba(0,0,0,0.45)]">
             {titleLines.map((line) => (
               <span key={line} className="block">
                 {line}
@@ -357,7 +376,7 @@ export function HeroScrollGallery() {
             ))}
           </h1>
 
-          <div className="flex w-full flex-col sm:max-w-md lg:pb-1">
+          <div className="flex w-full flex-col sm:max-w-md lg:ml-auto lg:pb-1">
             <p className="font-ui text-[15px] leading-relaxed tracking-[-0.01em] text-white/85 drop-shadow">
               {site.tagline}. Mandates for owners. Clarity for buyers and
               tenants.

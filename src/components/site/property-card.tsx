@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { ArrowUpRight, Ruler, Tag } from "lucide-react";
 
 export type PropertyCardData = {
@@ -47,11 +48,13 @@ function ProgressiveBlurScrim() {
 export function PropertyCard({ property }: { property: PropertyCardData }) {
   return (
     <article className="group relative flex min-h-[360px] flex-col overflow-hidden rounded-[16px] shadow-[0_12px_40px_-20px_rgba(0,0,0,0.35)] sm:min-h-[380px]">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
+      <Image
         src={property.image}
         alt={property.address}
-        className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+        fill
+        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+        quality={70}
+        className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
       />
 
       <ProgressiveBlurScrim />

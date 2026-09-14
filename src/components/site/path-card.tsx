@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState, type PointerEvent } from "react";
+import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -52,12 +53,14 @@ export function PathCard({
         "md:cursor-none",
       )}
     >
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
+      <Image
         src={image}
         alt=""
+        fill
+        sizes="(max-width: 768px) 100vw, 50vw"
+        quality={70}
         className={cn(
-          "absolute inset-0 h-full w-full object-cover transition-[filter] duration-700 ease-out",
+          "object-cover transition-[filter] duration-700 ease-out",
           hovering ? "blur-[10px]" : "blur-0",
         )}
       />

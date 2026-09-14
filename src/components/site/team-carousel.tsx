@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { Minus, Plus } from "lucide-react";
 import { site, teamMembers } from "@/lib/content";
 import { cn } from "@/lib/utils";
@@ -15,12 +16,14 @@ function TeamCard({
 
   return (
     <article className="relative aspect-[3/4] overflow-hidden rounded-2xl bg-zinc-200">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
+      <Image
         src={person.image}
         alt={person.name}
+        fill
+        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+        quality={70}
         className={cn(
-          "h-full w-full object-cover object-[center_18%] transition-transform duration-700 ease-out",
+          "object-cover object-[center_18%] transition-transform duration-700 ease-out",
           open && "scale-105",
         )}
       />

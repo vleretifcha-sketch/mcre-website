@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import Image from "next/image";
 import { properties, site } from "@/lib/content";
 import { CtaLink } from "./cta-button";
 import { PathCard } from "./path-card";
@@ -31,11 +32,13 @@ export function TrustMetricsBento() {
         y={32}
       >
         <div className="relative min-h-[320px] overflow-hidden rounded-2xl sm:min-h-[400px]">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1400&q=80"
+          <Image
+            src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1000&q=65"
             alt="Melbourne CBD commercial towers"
-            className="absolute inset-0 h-full w-full object-cover"
+            fill
+            sizes="(max-width: 1024px) 100vw, 50vw"
+            quality={70}
+            className="object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-ink-black/55 via-transparent to-ink-black/20" />
           <p className="absolute bottom-5 left-5 font-ui text-[12px] font-medium tracking-[0.14em] text-white/80 uppercase sm:bottom-6 sm:left-6">
@@ -109,12 +112,16 @@ export function FeatureSplit({
             {cta}
           </CtaLink>
         </div>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={image}
-          alt=""
-          className="aspect-[5/4] w-full rounded-3xl object-cover"
-        />
+        <div className="relative aspect-[5/4] w-full overflow-hidden rounded-3xl">
+          <Image
+            src={image}
+            alt=""
+            fill
+            sizes="(max-width: 1024px) 100vw, 50vw"
+            quality={70}
+            className="object-cover"
+          />
+        </div>
       </div>
     </Shell>
   );
@@ -131,7 +138,7 @@ export function ServicesSection() {
       stat: "15+",
       statLabel: "Years CBD sales focus",
       image:
-        "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1400&q=80",
+        "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=900&q=65",
     },
     {
       id: "services-lease",
@@ -142,7 +149,7 @@ export function ServicesSection() {
       stat: "16+",
       statLabel: "Commercial projects done",
       image:
-        "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1400&q=80",
+        "https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=900&q=65",
     },
   ] as const;
 
