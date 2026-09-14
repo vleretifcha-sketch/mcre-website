@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1000" viewBox="0 0 800 1000">
+  <rect width="800" height="1000" fill="#e8e9ec"/>
+  <circle cx="400" cy="380" r="120" fill="#c5c8ce"/>
+  <ellipse cx="400" cy="720" rx="200" ry="180" fill="#c5c8ce"/>
+  <text x="400" y="920" text-anchor="middle" font-family="system-ui,sans-serif" font-size="28" fill="#8a8f98" letter-spacing="4">LV</text>
+</svg>
