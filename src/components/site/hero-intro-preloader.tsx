@@ -6,6 +6,9 @@ import { CustomEase } from "gsap/CustomEase";
 import { finalLines, heroImages, preloaderLines } from "@/lib/content";
 
 type HeroIntroPreloaderProps = {
+  /** Fired just before the shell crossfades out — reveal the real hero underneath. */
+  onReveal?: () => void;
+  /** Fired after the shell is gone. */
   onComplete?: () => void;
 };
 
@@ -19,7 +22,10 @@ function preload(src: string) {
   });
 }
 
-export function HeroIntroPreloader({ onComplete }: HeroIntroPreloaderProps) {
+export function HeroIntroPreloader({
+  onReveal,
+  onComplete,
+}: HeroIntroPreloaderProps) {
   const rootRef = useRef<HTMLDivElement>(null);
   const [done, setDone] = useState(false);
 
@@ -27,6 +33,7 @@ export function HeroIntroPreloader({ onComplete }: HeroIntroPreloaderProps) {
     const prefersReduced =
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (prefersReduced) {
+      onReveal?.();
       setDone(true);
       onComplete?.();
       document.body.style.overflow = "";
@@ -82,12 +89,7 @@ export function HeroIntroPreloader({ onComplete }: HeroIntroPreloaderProps) {
         });
 
         const percentages = [0, 20, 60, 80, 99];
-        const mainTl = gsap.timeline({
-          onComplete: () => {
-            setDone(true);
-            onComplete?.();
-          },
-        });
+        const mainTl = gsap.timeline();
         document.body.style.overflow = "hidden";
 
         mainTl.to(
@@ -188,15 +190,8 @@ export function HeroIntroPreloader({ onComplete }: HeroIntroPreloaderProps) {
           },
           "expandFinal+=0.12",
         );
-        mainTl.to(
-          ".preloader-shell",
-          {
-            backgroundColor: "rgba(23,23,23,0.12)",
-            duration: 0.35,
-            ease: "customEase",
-          },
-          "expandFinal+=0.28",
-        );
+        // Keep shell opaque — fading the fill to translucent against an
+        // unfinished handoff reads as a white flash in production.
         mainTl.to(
           ".text-container-final",
           { opacity: 1, duration: 0.08 },
@@ -214,11 +209,20 @@ export function HeroIntroPreloader({ onComplete }: HeroIntroPreloaderProps) {
           "expandFinal+=0.6",
         );
 
+        // Reveal the real hero under the shell, then crossfade out.
+        mainTl.call(() => {
+          onReveal?.();
+        }, undefined, "expandFinal+=1.05");
         mainTl.to(
           root,
-          { opacity: 0, duration: 0.45, ease: "power2.out" },
-          "expandFinal+=1.15",
+          { opacity: 0, duration: 0.4, ease: "power2.out" },
+          "expandFinal+=1.1",
         );
+        mainTl.call(() => {
+          setDone(true);
+          document.body.style.overflow = "";
+          onComplete?.();
+        });
       }, root);
     };
 
@@ -229,7 +233,7 @@ export function HeroIntroPreloader({ onComplete }: HeroIntroPreloaderProps) {
       ctx?.revert();
       document.body.style.overflow = "";
     };
-  }, [onComplete]);
+  }, [onReveal, onComplete]);
 
   if (done) return null;
 

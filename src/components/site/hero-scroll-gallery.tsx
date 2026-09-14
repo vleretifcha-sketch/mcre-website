@@ -53,7 +53,9 @@ export function HeroScrollGallery() {
   const trackRef = useRef<HTMLDivElement>(null);
   const copyRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLElement | null)[]>([]);
+  const [heroRevealed, setHeroRevealed] = useState(false);
   const [introDone, setIntroDone] = useState(false);
+  const onIntroReveal = useCallback(() => setHeroRevealed(true), []);
   const onIntroComplete = useCallback(() => setIntroDone(true), []);
 
   useEffect(() => {
@@ -110,9 +112,7 @@ export function HeroScrollGallery() {
       gsap.set(copy, { opacity: 1, y: 0, clearProps: "pointerEvents" });
       gsap.set(heroCard, {
         width: contentW(),
-        height: isMobile
-          ? Math.min(window.innerHeight * 0.62, 520)
-          : root.clientHeight - 24,
+        height: root.clientHeight - 24,
         borderRadius: 16,
       });
 
@@ -141,10 +141,7 @@ export function HeroScrollGallery() {
       const scrollProgress = scrollAt / total;
       const copyGoneAt = 0.1;
 
-      const fullHeroH = () =>
-        isMobile
-          ? Math.min(window.innerHeight * 0.62, 520)
-          : root.clientHeight - 24;
+      const fullHeroH = () => root.clientHeight - 24;
 
       const resetResting = () => {
         setSides(false);
@@ -309,10 +306,7 @@ export function HeroScrollGallery() {
     >
       <div
         ref={trackRef}
-        className={cn(
-          "flex w-max min-w-full shrink-0 items-center will-change-transform",
-          !introDone && "invisible",
-        )}
+        className="flex w-max min-w-full shrink-0 items-center will-change-transform"
         style={{ gap: 0 }}
         aria-hidden={!introDone}
       >
@@ -340,6 +334,8 @@ export function HeroScrollGallery() {
               }
               quality={70}
               priority={Boolean(item.hero)}
+              // Local hero matches the preloader URL so the handoff uses cache.
+              unoptimized={item.src.startsWith("/")}
               className="object-cover"
               draggable={false}
             />
@@ -362,12 +358,12 @@ export function HeroScrollGallery() {
       <div
         ref={copyRef}
         className={cn(
-          // Align to the hero card (root already has px-4), then inset copy inside the image.
-          "pointer-events-none absolute inset-x-4 bottom-8 z-10 px-5 sm:bottom-10 sm:px-6 lg:bottom-12 lg:px-8",
-          !introDone && "invisible",
+          // Match hero card frame (root px-4 + 12px vertical), then inset copy inside.
+          "pointer-events-none absolute inset-x-4 top-3 bottom-3 z-10 flex flex-col justify-end px-5 pb-6 sm:px-6 sm:pb-8 lg:px-8 lg:pb-10",
+          !heroRevealed && "invisible",
         )}
       >
-        <div className="pointer-events-auto flex w-full flex-col gap-8 lg:flex-row lg:items-end lg:justify-between lg:gap-12">
+        <div className="pointer-events-auto flex w-full flex-col gap-5 sm:gap-8 lg:flex-row lg:items-end lg:justify-between lg:gap-12">
           <h1 className="max-w-[12ch] font-ui text-[clamp(2.75rem,8.5vw,5.25rem)] font-semibold leading-[0.92] tracking-[-0.04em] text-white uppercase drop-shadow-[0_2px_24px_rgba(0,0,0,0.45)]">
             {titleLines.map((line) => (
               <span key={line} className="block">
@@ -381,7 +377,7 @@ export function HeroScrollGallery() {
               {site.tagline}. Mandates for owners. Clarity for buyers and
               tenants.
             </p>
-            <div className="mt-6 flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:flex-wrap">
+            <div className="mt-5 flex w-full flex-col gap-3 sm:mt-6 sm:w-auto sm:flex-row sm:flex-wrap">
               <CtaLink
                 href="#appraisal"
                 variant="inverse"
@@ -402,7 +398,10 @@ export function HeroScrollGallery() {
         </div>
       </div>
 
-      <HeroIntroPreloader onComplete={onIntroComplete} />
+      <HeroIntroPreloader
+        onReveal={onIntroReveal}
+        onComplete={onIntroComplete}
+      />
     </div>
   );
 }
